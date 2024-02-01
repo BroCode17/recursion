@@ -1,4 +1,7 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -31,6 +34,34 @@ public class Main {
 
         res.forEach(System.out::println);
     }
+    public static  void combinationSumTwo(){
+        int[] array = {10,1,2,7,6,1,5};
+        int target = 8;
+        List<List<Integer>> res  = new ArrayList<>();
+        Arrays.sort(array);
+        BackTracking.combinationSumII(0, array, target,res, new ArrayList<>()); //
+
+        res.forEach(System.out::println);
+    }
+
+    //Permutation
+    public static  void permutationOne(){
+        int[] array = {3,1,2};
+        List<List<Integer>> res  = new ArrayList<>();
+
+        BackTracking.printAllPermutation( array, res, new ArrayList<>(), new Boolean[array.length]); //
+        System.out.println("Permutation I");
+        res.forEach(System.out::println);
+    }
+
+    public static  void permutationTwo(){
+        int[] array = {3,1,2};
+        List<List<Integer>> res  = new ArrayList<>();
+
+        BackTracking.printAllPermutationII( array, res, new ArrayList<>()); //
+        System.out.println("Permutation II");
+        res.forEach(System.out::println);
+    }
     public static void main(String[] args) {
 
         //Print All Sub Array whose Sum Equal To K
@@ -44,5 +75,12 @@ public class Main {
 
         //Combination Sum
         combinationSumOne(); // return [2,2,3], [7];
+
+        combinationSumTwo(); // return [[1,1,6],[1,2,5],[1,7],[2,6]]
+        //Permutation I
+        permutationOne(); // returns [[3, 1, 2],[3, 2, 1],[1, 3, 2],[1, 2, 3],[2, 3, 1],[2, 1, 3]]
+
+        //Permutation II
+        permutationTwo(); // returns [[3, 1, 2],[3, 2, 1],[1, 3, 2],[1, 2, 3],[2, 3, 1],[2, 1, 3]]
     }
 }
