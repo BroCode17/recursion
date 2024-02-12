@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BackTracking {
     /**
@@ -253,4 +254,170 @@ public class BackTracking {
             list.remove(list.size() - 1);
         }
     }
+
+    //M coloring problem
+
+    /**
+     * Given an undirected graph and an integer M.
+     * The task is to determine if the graph can be
+     * colored with at most M colors such that no
+     * two adjacent vertices of the graph are colored
+     * with the same color. Here coloring of a graph
+     * means the assignment of colors to all vertices.
+     * Print 1 if it is possible to colour vertices
+     * and 0 otherwise.
+     * Example 1:
+     * Input:
+     * N = 4
+     * M = 3
+     * E = 5
+     * Edges[] = {(0,1),(1,2),(2,3),(3,0),(0,2)}
+     * Output: 1
+     * Explanation: It is possible to colour the
+     * given graph using 3 colours.
+     * @param m - the max number of colors
+     * @param n - number of vertices size
+     * @return true or false is the m can be used to color all the elements
+     *
+     */
+    public static boolean graphColoring(List<Integer>[] graph, int m, int n) {
+        // Your code here
+        int[] check = new int[n];
+        int size = graph.length;
+        return isValid(0, graph, check, m, size);
+    }
+
+    static boolean isValid(int node, List<Integer>[] graph, int[] check, int m, int n){
+
+        //base case
+        if(node == n){
+            return true;
+        }
+
+        for(int i = 1; i <= m; i++){
+            if(isSafe(i, node, graph, check)){
+                check[node] = 1;
+                if(isValid(node+1, graph, check, m, n))
+                    return true;
+                check[node] = 0;
+            }
+        }
+        return false;
+    }
+
+    static boolean isSafe(int color, int node, List<Integer>[] graph, int[] check){
+
+        for(int row: graph[node]){
+            if(check[row] == color)
+                return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * Write a program to solve a Sudoku puzzle by filling the empty cells.
+     *
+     * A sudoku solution must satisfy all of the following rules:
+     *
+     * Each of the digits 1-9 must occur exactly once in each row.
+     * Each of the digits 1-9 must occur exactly once in each column.
+     * Each of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.
+     * The '.' character indicates empty cells.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: board = [["5","3",".",".","7",".",".",".","."],
+     * ["6",".",".","1","9","5",".",".","."],
+     * [".","9","8",".",".",".",".","6","."],
+     * ["8",".",".",".","6",".",".",".","3"],
+     * ["4",".",".","8",".","3",".",".","1"],
+     * ["7",".",".",".","2",".",".",".","6"],
+     * [".","6",".",".",".",".","2","8","."],
+     * [".",".",".","4","1","9",".",".","5"],
+     * [".",".",".",".","8",".",".","7","9"]]
+     * Output: [["5","3","4","6","7","8","9","1","2"],
+     * ["6","7","2","1","9","5","3","4","8"],
+     * ["1","9","8","3","4","2","5","6","7"],
+     * ["8","5","9","7","6","1","4","2","3"],
+     * ["4","2","6","8","5","3","7","9","1"],
+     * ["7","1","3","9","2","4","8","5","6"],
+     * ["9","6","1","5","3","7","2","8","4"],
+     * ["2","8","7","4","1","9","6","3","5"],
+     * ["3","4","5","2","8","6","1","7","9"]]
+     * Explanation: The input board is shown above and the only valid solution is shown below:
+     */
+
+      public static boolean sudokuSolve(String[][] board){
+          if(board.length == 0)
+              return false;
+
+          for(int row = 0; row < 9; row++){
+              for(int col = 0; col < 9; col++){
+                  if(board[row][col] == "."){
+                      for(char c = '1'; c <= '9'; c++){
+                          if(itCan(board, row, col,c)){
+                              board[row][col] = String.valueOf(c);
+                              if(sudokuSolve(board))
+                                  return true;
+                              else{
+                                  board[row][col] = ".";
+                              }
+                          }
+                      }
+                      return false;
+                  }
+              }
+          }
+          return true;
+      }
+
+      static  boolean itCan(String[][] board, int row, int col, char c){
+          for(int i = 0; i < 9; i++){
+              if(board[row][i].equals(String.valueOf(c)))
+                  return false;
+              if(Objects.equals(board[i][col], String.valueOf(c)))
+                  return false;
+              if(Objects.equals(board[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3], String.valueOf(c)))
+                  return false;
+          }
+          return true;
+      }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

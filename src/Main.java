@@ -62,6 +62,42 @@ public class Main {
         System.out.println("Permutation II");
         res.forEach(System.out::println);
     }
+
+    public static void mColoring(int n, int m){
+        List<Integer>[] G = new ArrayList[n];
+
+        for(int i = 0; i < n; i++)
+            G[i] = new ArrayList<>();
+        G[0].add(1);
+        G[1].add(0);
+        G[1].add(2);
+        G[2].add(1);
+        G[2].add(3);
+        G[3].add(2);
+        G[3].add(0);
+        G[0].add(3);
+        G[0].add(2);
+        G[2].add(0);
+
+        System.out.println(BackTracking.graphColoring( G, m, n));
+    }
+
+    public static  void sudoku(){
+        String[][] board = {{"5", "3", ".", ".", "7", ".", ".", ".", "."},
+                {"6", ".", ".", "1", "9", "5", ".", ".", "."},
+                {".", "9", "8", ".", ".", ".", ".", "6", "."},
+                {"8", ".", ".", ".", "6", ".", ".", ".", "3"},
+                {"4", ".", ".", "8", ".", "3", ".", ".", "1"},
+                {"7", ".", ".", ".", "2", ".", ".", ".", "6"},
+                {".", "6", ".", ".", ".", ".", "2", "8", "."},
+                {".", ".", ".", "4", "1", "9", ".", ".", "5"},
+                {".", ".", ".", ".", "8", ".", ".", "7", "9"}};
+
+        BackTracking.sudokuSolve(board);
+        for(String[] row: board){
+            System.out.println(Arrays.toString(row));
+        }
+    }
     public static void main(String[] args) {
 
         //Print All Sub Array whose Sum Equal To K
@@ -82,5 +118,11 @@ public class Main {
 
         //Permutation II
         permutationTwo(); // returns [[3, 1, 2],[3, 2, 1],[1, 3, 2],[1, 2, 3],[2, 3, 1],[2, 1, 3]]
+
+        //M Coloring
+        mColoring(4,3); //return true;
+
+        //Sudoku Solver;
+        sudoku();
     }
 }
